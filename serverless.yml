@@ -1,0 +1,37 @@
+org: thrishma
+app: world-holidays
+service: world-holidays
+
+frameworkVersion: '2 || 3'
+
+plugins:
+  - serverless-python-requirements
+custom:
+  bucket_name: slack-bot
+  pythonRequirements:
+    dockerizePip: non-linux
+     
+
+provider:
+  name: aws
+  runtime: python3.8
+  lambdaHashingVersion: 20201221
+
+functions:
+  holiday_fetcher:
+    handler: holidayFetcher.handler
+    environment:
+      S3_BUCKET_NAME: ${self:custom.bucket_name}
+      S3_FOLDER_NAME: holidays
+    events:
+      - schedule: rate(1 year)
+  
+  holiday_searcher:
+    handler: holidayFetcher.handler
+    environment:
+      S3_BUCKET_NAME: ${self:custom.bucket_name}
+      S3_FOLDER_NAME: holidays
+      S3_FILE_NAME: list_of_holidays_per_date.json
+    events:
+      - schedule: rate(1 day)
+
