@@ -1,14 +1,13 @@
 <!--
-title: 'AWS Python Example'
-description: 'This template demonstrates how to deploy a Python function running on AWS Lambda using the traditional Serverless Framework.'
+title: 'World holidays Reminder'
+description: 'Web scrapes holidays from a given URL and notifies a specific slack channel on which holiday it is today around the world.'
 layout: Doc
 framework: v2
 platform: AWS
 language: python
 priority: 2
-authorLink: 'https://github.com/serverless'
-authorName: 'Serverless, inc.'
-authorAvatar: 'https://avatars1.githubusercontent.com/u/13742415?s=200&v=4'
+authorLink: 'https://github.com/thrishma'
+authorName: 'Thrishma Reddy'
 -->
 
 
