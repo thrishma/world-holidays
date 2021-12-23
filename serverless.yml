@@ -8,7 +8,8 @@ plugins:
   - serverless-python-requirements
 
 custom:
-  bucket_name: slack-bot
+  bucket_name: holiday-reminder-slack-bot
+  s3_folder_name: holidays
   pythonRequirements:
     dockerizePip: non-linux
      
@@ -26,7 +27,7 @@ functions:
     timeout: 15
     environment:
       S3_BUCKET_NAME: ${self:custom.bucket_name}
-      S3_FOLDER_NAME: holidays
+      S3_FOLDER_NAME: ${self:custom.s3_folder_name}
     events:
       - schedule: rate(364 days)
   
@@ -37,7 +38,7 @@ functions:
     timeout: 15
     environment:
       S3_BUCKET_NAME: ${self:custom.bucket_name}
-      S3_FOLDER_NAME: holidays
+      S3_FOLDER_NAME: ${self:custom.s3_folder_name}
       S3_FILE_NAME: list_of_holidays_per_date.json
     events:
       - schedule: rate(1 day)
