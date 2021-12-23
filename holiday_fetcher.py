@@ -13,8 +13,6 @@ S3_FILE_NAME = os.environ.get('S3_FILE_NAME')
 
 def create_json_files(file_name, content):
     # create new json files
-    # with open(file_name, 'w') as outfile:
-    #     json.dump(content, outfile)
     bucket_key = f'{S3_FOLDER_NAME}/{file_name}'
     print(f"Creating a file - {file_name} in {S3_FOLDER_NAME}")
     create_file_in_s3(file_name, bucket_key, json.dumps(content))

@@ -8,7 +8,6 @@
       "name": "aws",
       "runtime": "python3.8",
       "lambdaHashingVersion": "20201221",
-      "role": "arn:aws:iam::#{AWS::AccountId}:role/lambda_basic_execution",
       "stage": "dev",
       "region": "us-east-1",
       "versionFunctions": true,
@@ -97,6 +96,89 @@
               "LogGroupName": "/aws/lambda/holiday_searcher"
             }
           },
+          "IamRoleLambdaExecution": {
+            "Type": "AWS::IAM::Role",
+            "Properties": {
+              "AssumeRolePolicyDocument": {
+                "Version": "2012-10-17",
+                "Statement": [
+                  {
+                    "Effect": "Allow",
+                    "Principal": {
+                      "Service": [
+                        "lambda.amazonaws.com"
+                      ]
+                    },
+                    "Action": [
+                      "sts:AssumeRole"
+                    ]
+                  }
+                ]
+              },
+              "Policies": [
+                {
+                  "PolicyName": {
+                    "Fn::Join": [
+                      "-",
+                      [
+                        "world-holidays",
+                        "dev",
+                        "lambda"
+                      ]
+                    ]
+                  },
+                  "PolicyDocument": {
+                    "Version": "2012-10-17",
+                    "Statement": [
+                      {
+                        "Effect": "Allow",
+                        "Action": [
+                          "logs:CreateLogStream",
+                          "logs:CreateLogGroup"
+                        ],
+                        "Resource": [
+                          {
+                            "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/holiday_fetcher:*"
+                          },
+                          {
+                            "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/holiday_searcher:*"
+                          }
+                        ]
+                      },
+                      {
+                        "Effect": "Allow",
+                        "Action": [
+                          "logs:PutLogEvents"
+                        ],
+                        "Resource": [
+                          {
+                            "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/holiday_fetcher:*:*"
+                          },
+                          {
+                            "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/holiday_searcher:*:*"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                }
+              ],
+              "Path": "/",
+              "RoleName": {
+                "Fn::Join": [
+                  "-",
+                  [
+                    "world-holidays",
+                    "dev",
+                    {
+                      "Ref": "AWS::Region"
+                    },
+                    "lambdaRole"
+                  ]
+                ]
+              }
+            }
+          },
           "EnterpriseLogAccessIamRole": {
             "Type": "AWS::IAM::Role",
             "Properties": {
@@ -156,7 +238,7 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/world-holidays/dev/1640228644317-2021-12-23T03:04:04.317Z/world-holidays.zip"
+                "S3Key": "serverless/world-holidays/dev/1640229057184-2021-12-23T03:10:57.184Z/world-holidays.zip"
               },
               "Handler": "s_holidayFetcher.handler",
               "Runtime": "python3.8",
@@ -171,7 +253,12 @@
                   "S3_FILE_NAME": "list_of_holidays_per_date.json"
                 }
               },
-              "Role": "arn:aws:iam::#{AWS::AccountId}:role/lambda_basic_execution"
+              "Role": {
+                "Fn::GetAtt": [
+                  "IamRoleLambdaExecution",
+                  "Arn"
+                ]
+              }
             },
             "DependsOn": [
               "HolidayFetcherLogGroup"
@@ -184,7 +271,7 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/world-holidays/dev/1640228644317-2021-12-23T03:04:04.317Z/world-holidays.zip"
+                "S3Key": "serverless/world-holidays/dev/1640229057184-2021-12-23T03:10:57.184Z/world-holidays.zip"
               },
               "Handler": "s_holidaySearcher.handler",
               "Runtime": "python3.8",
@@ -199,31 +286,36 @@
                   "S3_FILE_NAME": "list_of_holidays_per_date.json"
                 }
               },
-              "Role": "arn:aws:iam::#{AWS::AccountId}:role/lambda_basic_execution"
+              "Role": {
+                "Fn::GetAtt": [
+                  "IamRoleLambdaExecution",
+                  "Arn"
+                ]
+              }
             },
             "DependsOn": [
               "HolidaySearcherLogGroup"
             ]
           },
-          "HolidayFetcherLambdaVersioncPKgbNLIWzT37hZnGvYFAT83z0hnYaesUmfCKSJVU": {
+          "HolidayFetcherLambdaVersionVsERCNpWZOvKzNGD5fOutWGvvWZqouiAbiCTi5AErM": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "HolidayFetcherLambdaFunction"
               },
-              "CodeSha256": "bPh3ngKntCqY3KMuftIoEHYxzGOSVhtgxXT96+ZgGPo=",
+              "CodeSha256": "R5+divthnI6p+wsy21uL8z1r0zBNvQiowUihumRu1IM=",
               "Description": "Web scrapes holidays from a given URL and saves it to s3"
             }
           },
-          "HolidaySearcherLambdaVersionSpBrYurW65i9G1AY5nsA7aXQKQDe0VS1KZibi31GeHw": {
+          "HolidaySearcherLambdaVersionxeFriJUjbaSdByD4VBads3eyDi9HePioNBhw96JeI": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "HolidaySearcherLambdaFunction"
               },
-              "CodeSha256": "bPh3ngKntCqY3KMuftIoEHYxzGOSVhtgxXT96+ZgGPo=",
+              "CodeSha256": "R5+divthnI6p+wsy21uL8z1r0zBNvQiowUihumRu1IM=",
               "Description": "Reads the file from s3 and returns the holidays in all over the world for a given date"
             }
           },
@@ -345,7 +437,7 @@
           "HolidayFetcherLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "HolidayFetcherLambdaVersioncPKgbNLIWzT37hZnGvYFAT83z0hnYaesUmfCKSJVU"
+              "Ref": "HolidayFetcherLambdaVersionVsERCNpWZOvKzNGD5fOutWGvvWZqouiAbiCTi5AErM"
             },
             "Export": {
               "Name": "sls-world-holidays-dev-HolidayFetcherLambdaFunctionQualifiedArn"
@@ -354,7 +446,7 @@
           "HolidaySearcherLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "HolidaySearcherLambdaVersionSpBrYurW65i9G1AY5nsA7aXQKQDe0VS1KZibi31GeHw"
+              "Ref": "HolidaySearcherLambdaVersionxeFriJUjbaSdByD4VBads3eyDi9HePioNBhw96JeI"
             },
             "Export": {
               "Name": "sls-world-holidays-dev-HolidaySearcherLambdaFunctionQualifiedArn"
@@ -477,7 +569,7 @@
         "memory": 1024,
         "runtime": "python3.8",
         "vpc": {},
-        "versionLogicalId": "HolidayFetcherLambdaVersioncPKgbNLIWzT37hZnGvYFAT83z0hnYaesUmfCKSJVU"
+        "versionLogicalId": "HolidayFetcherLambdaVersionVsERCNpWZOvKzNGD5fOutWGvvWZqouiAbiCTi5AErM"
       },
       "holidaySearcher": {
         "name": "holiday_searcher",
@@ -498,7 +590,7 @@
         "memory": 1024,
         "runtime": "python3.8",
         "vpc": {},
-        "versionLogicalId": "HolidaySearcherLambdaVersionSpBrYurW65i9G1AY5nsA7aXQKQDe0VS1KZibi31GeHw"
+        "versionLogicalId": "HolidaySearcherLambdaVersionxeFriJUjbaSdByD4VBads3eyDi9HePioNBhw96JeI"
       }
     },
     "configValidationMode": "warn",
@@ -533,7 +625,7 @@
     "artifact": "/Users/thrishmareddy/Desktop/world-holidays/.serverless/world-holidays.zip"
   },
   "package": {
-    "artifactDirectoryName": "serverless/world-holidays/dev/1640228644317-2021-12-23T03:04:04.317Z",
+    "artifactDirectoryName": "serverless/world-holidays/dev/1640229057184-2021-12-23T03:10:57.184Z",
     "artifact": "world-holidays.zip"
   }
 }

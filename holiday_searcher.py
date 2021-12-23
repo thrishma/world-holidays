@@ -10,11 +10,6 @@ S3_FILE_NAME = os.environ.get('S3_FILE_NAME')
 
 bucket_key = f'{S3_FOLDER_NAME}/{S3_FILE_NAME}'
 
-# def read_json_files(file_name):
-#     # create new json files
-#     file = open(file_name, "r")
-#     return json.load(file)
-
 def find_todays_holidays():
     today_date = datetime.today().strftime('%Y-%m-%d')
     text_to_print = []
@@ -30,6 +25,7 @@ def find_todays_holidays():
             country_name = holidays['country_name']
             text_to_print.append(f'{count}. Holiday: {holiday_name} | Country: {country_name} \n')
             count += 1
+    print(f"text_to_print - {text_to_print}")
     return text_to_print
 
 def print_message_to_slack(channel='', text_to_print=''):
@@ -54,5 +50,5 @@ def handler(event, context):
     except Exception as e:
         return {
             "statusCode": 500, 
-            "body": f"Unable to send a message to {slack_channel}, an error occured: "
+            "body": f"Unable to send a message to {slack_channel}, an error occured: {e}"
         }
