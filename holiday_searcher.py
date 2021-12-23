@@ -18,7 +18,7 @@ def find_todays_holidays():
         num_of_holidays = len(holidays_file[str(today_date)])
         holiday_word = 'holiday' if num_of_holidays == 1 else 'holidays'
 
-        text_to_print.append(f'Today, the world celebrates {num_of_holidays} {holiday_word} \n')
+        text_to_print.append(f'Today {today_date}, the world celebrates {num_of_holidays} {holiday_word} \n')
         count = 1
         for holidays in holidays_file[str(today_date)]:
             holiday_name = holidays['holiday_name']
