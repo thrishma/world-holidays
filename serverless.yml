@@ -6,7 +6,6 @@ frameworkVersion: '2 || 3'
 
 plugins:
   - serverless-python-requirements
-  - serverless-ssm-fetch
 
 custom:
   bucket_name: slack-bot
@@ -20,22 +19,20 @@ provider:
   lambdaHashingVersion: 20201221
 
 functions:
-  holiday_fetcher:
-    handler: holidayFetcher.handler
+  holidayFetcher:
+    handler: holiday_fetcher.handler
     environment:
       S3_BUCKET_NAME: ${self:custom.bucket_name}
       S3_FOLDER_NAME: holidays
     events:
       - schedule: rate(1 year)
   
-  holiday_searcher:
-    handler: holidayFetcher.handler
+  holidaySearcher:
+    handler: holiday_searcher.handler
     environment:
       S3_BUCKET_NAME: ${self:custom.bucket_name}
       S3_FOLDER_NAME: holidays
       S3_FILE_NAME: list_of_holidays_per_date.json
-    serverlessSsmFetch:
-      SLACK_TOKEN: SLACK_TOKEN
     events:
       - schedule: rate(1 day)
 
