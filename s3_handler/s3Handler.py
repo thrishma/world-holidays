@@ -34,6 +34,15 @@ class S3Handler:
         self.load_s3_Object()
         return self.object
 
+    def getS3Resource(self):
+        if self.s3_resource is None:
+            self.s3_resource = self.session.resource('s3', config=self.config)
+        return self.s3_resource
+
+    def load_s3_Object(self):
+        if self.object is None:
+            self.object = self.getS3Resource().Object(self.bucket_name, self.bucket_key)
+
 
 def create_file_in_s3(filename, bucket_key, data):
     # create a new file in the given path
