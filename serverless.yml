@@ -18,7 +18,6 @@ provider:
   name: aws
   runtime: python3.8
   lambdaHashingVersion: 20201221
-  role: arn:aws:iam::#{AWS::AccountId}:role/lambda_basic_execution
 
 functions:
   holidayFetcher:
