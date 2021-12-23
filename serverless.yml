@@ -29,6 +29,7 @@ functions:
     environment:
       S3_BUCKET_NAME: ${self:custom.bucket_name}
       S3_FOLDER_NAME: ${self:custom.s3_folder_name}
+      S3_FILE_NAME: list_of_holidays_per_date.json
     events:
       - schedule: rate(364 days)
   

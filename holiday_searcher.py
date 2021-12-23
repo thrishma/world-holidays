@@ -8,7 +8,7 @@ S3_BUCKET_NAME = os.environ.get('S3_BUCKET_NAME')
 S3_FOLDER_NAME = os.environ.get('S3_FOLDER_NAME')
 S3_FILE_NAME = os.environ.get('S3_FILE_NAME')
 
-bucket_key = f'{S3_BUCKET_NAME}/{S3_FOLDER_NAME}/{S3_FILE_NAME}'
+bucket_key = f'{S3_FOLDER_NAME}/{S3_FILE_NAME}'
 
 # def read_json_files(file_name):
 #     # create new json files

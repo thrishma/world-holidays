@@ -1,21 +1,24 @@
 # Create a list of countries from a given url and fetch 
 # holidays for every country and save it per date
-
+import logging
 import os
 import requests
 from bs4 import BeautifulSoup
 import json
 from s3_handler.s3Handler import create_file_in_s3
 
+LOGGER = logging.getLogger()
+
 S3_BUCKET_NAME = os.environ.get('S3_BUCKET_NAME')
 S3_FOLDER_NAME = os.environ.get('S3_FOLDER_NAME')
-
-bucket_key = f'{S3_BUCKET_NAME}/{S3_FOLDER_NAME}'
+S3_FILE_NAME = os.environ.get('S3_FILE_NAME')
 
 def create_json_files(file_name, content):
     # create new json files
     # with open(file_name, 'w') as outfile:
     #     json.dump(content, outfile)
+    bucket_key = f'{S3_FOLDER_NAME}/{file_name}'
+    LOGGER.info(f"Creating a file - {file_name} in {S3_FOLDER_NAME}")
     create_file_in_s3(file_name, bucket_key, json.dumps(content))
     
 
@@ -76,7 +79,7 @@ def find_holidays_per_country():
             else:
                 per_date_holidays_list[holiday_date].append(holiday_related_data)
     
-    create_json_files('list_of_holidays_per_date.json', per_date_holidays_list)
+    create_json_files(S3_FILE_NAME, per_date_holidays_list)
 
 def handler(event, context):
     try:
