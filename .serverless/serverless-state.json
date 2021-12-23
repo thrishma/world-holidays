@@ -87,13 +87,13 @@
           "HolidayFetcherLogGroup": {
             "Type": "AWS::Logs::LogGroup",
             "Properties": {
-              "LogGroupName": "/aws/lambda/world-holidays-dev-holidayFetcher"
+              "LogGroupName": "/aws/lambda/holiday_fetcher"
             }
           },
           "HolidaySearcherLogGroup": {
             "Type": "AWS::Logs::LogGroup",
             "Properties": {
-              "LogGroupName": "/aws/lambda/world-holidays-dev-holidaySearcher"
+              "LogGroupName": "/aws/lambda/holiday_searcher"
             }
           },
           "IamRoleLambdaExecution": {
@@ -138,7 +138,10 @@
                         ],
                         "Resource": [
                           {
-                            "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/world-holidays-dev*:*"
+                            "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/holiday_fetcher:*"
+                          },
+                          {
+                            "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/holiday_searcher:*"
                           }
                         ]
                       },
@@ -149,7 +152,10 @@
                         ],
                         "Resource": [
                           {
-                            "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/world-holidays-dev*:*:*"
+                            "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/holiday_fetcher:*:*"
+                          },
+                          {
+                            "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/holiday_searcher:*:*"
                           }
                         ]
                       }
@@ -232,16 +238,17 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/world-holidays/dev/1640219913422-2021-12-23T00:38:33.422Z/world-holidays.zip"
+                "S3Key": "serverless/world-holidays/dev/1640221787646-2021-12-23T01:09:47.646Z/world-holidays.zip"
               },
               "Handler": "s_holidayFetcher.handler",
               "Runtime": "python3.8",
-              "FunctionName": "world-holidays-dev-holidayFetcher",
+              "FunctionName": "holiday_fetcher",
               "MemorySize": 1024,
-              "Timeout": 6,
+              "Timeout": 15,
+              "Description": "Web scrapes holidays from a given URL and saves it to s3",
               "Environment": {
                 "Variables": {
-                  "S3_BUCKET_NAME": "slack-bot",
+                  "S3_BUCKET_NAME": "holiday-reminder-slack-bot",
                   "S3_FOLDER_NAME": "holidays"
                 }
               },
@@ -263,16 +270,17 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/world-holidays/dev/1640219913422-2021-12-23T00:38:33.422Z/world-holidays.zip"
+                "S3Key": "serverless/world-holidays/dev/1640221787646-2021-12-23T01:09:47.646Z/world-holidays.zip"
               },
               "Handler": "s_holidaySearcher.handler",
               "Runtime": "python3.8",
-              "FunctionName": "world-holidays-dev-holidaySearcher",
+              "FunctionName": "holiday_searcher",
               "MemorySize": 1024,
-              "Timeout": 6,
+              "Timeout": 15,
+              "Description": "Reads the file from s3 and returns the holidays in all over the world for a given date",
               "Environment": {
                 "Variables": {
-                  "S3_BUCKET_NAME": "slack-bot",
+                  "S3_BUCKET_NAME": "holiday-reminder-slack-bot",
                   "S3_FOLDER_NAME": "holidays",
                   "S3_FILE_NAME": "list_of_holidays_per_date.json"
                 }
@@ -288,24 +296,26 @@
               "HolidaySearcherLogGroup"
             ]
           },
-          "HolidayFetcherLambdaVersionhNn9np2wUGXHFvMu1EKG0NRBAROewgksqrF2dQYDw": {
+          "HolidayFetcherLambdaVersionzrfG3LBnjljBfx0kj0LL0DmVHgaxoSKO48SGZpJ8": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "HolidayFetcherLambdaFunction"
               },
-              "CodeSha256": "qI63OKXjSsH15Aed1tuqxSWyUqS33up2hJVsyNhus/s="
+              "CodeSha256": "fk8+FV6pbeyLP70TSuGogtBHrolWZrgHw3jeWYuMiSc=",
+              "Description": "Web scrapes holidays from a given URL and saves it to s3"
             }
           },
-          "HolidaySearcherLambdaVersiondjxBSb1X18h1Qi8yaMQpTKjFXcJlvsydqUfhKnfaUM": {
+          "HolidaySearcherLambdaVersionuSrewpWAHsiPERE7mHNpx1M3wsWoVl3ZzAGRmHBo7o": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "HolidaySearcherLambdaFunction"
               },
-              "CodeSha256": "qI63OKXjSsH15Aed1tuqxSWyUqS33up2hJVsyNhus/s="
+              "CodeSha256": "fk8+FV6pbeyLP70TSuGogtBHrolWZrgHw3jeWYuMiSc=",
+              "Description": "Reads the file from s3 and returns the holidays in all over the world for a given date"
             }
           },
           "HolidayFetcherEventsRuleSchedule1": {
@@ -426,7 +436,7 @@
           "HolidayFetcherLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "HolidayFetcherLambdaVersionhNn9np2wUGXHFvMu1EKG0NRBAROewgksqrF2dQYDw"
+              "Ref": "HolidayFetcherLambdaVersionzrfG3LBnjljBfx0kj0LL0DmVHgaxoSKO48SGZpJ8"
             },
             "Export": {
               "Name": "sls-world-holidays-dev-HolidayFetcherLambdaFunctionQualifiedArn"
@@ -435,7 +445,7 @@
           "HolidaySearcherLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "HolidaySearcherLambdaVersiondjxBSb1X18h1Qi8yaMQpTKjFXcJlvsydqUfhKnfaUM"
+              "Ref": "HolidaySearcherLambdaVersionuSrewpWAHsiPERE7mHNpx1M3wsWoVl3ZzAGRmHBo7o"
             },
             "Export": {
               "Name": "sls-world-holidays-dev-HolidaySearcherLambdaFunctionQualifiedArn"
@@ -528,7 +538,8 @@
       "vpc": {}
     },
     "custom": {
-      "bucket_name": "slack-bot",
+      "bucket_name": "holiday-reminder-slack-bot",
+      "s3_folder_name": "holidays",
       "pythonRequirements": {
         "dockerizePip": "non-linux"
       }
@@ -539,9 +550,12 @@
     "pluginsData": {},
     "functions": {
       "holidayFetcher": {
+        "name": "holiday_fetcher",
+        "description": "Web scrapes holidays from a given URL and saves it to s3",
         "handler": "s_holidayFetcher.handler",
+        "timeout": 15,
         "environment": {
-          "S3_BUCKET_NAME": "slack-bot",
+          "S3_BUCKET_NAME": "holiday-reminder-slack-bot",
           "S3_FOLDER_NAME": "holidays"
         },
         "events": [
@@ -549,18 +563,19 @@
             "schedule": "rate(364 days)"
           }
         ],
-        "name": "world-holidays-dev-holidayFetcher",
         "package": {},
         "memory": 1024,
-        "timeout": 6,
         "runtime": "python3.8",
         "vpc": {},
-        "versionLogicalId": "HolidayFetcherLambdaVersionhNn9np2wUGXHFvMu1EKG0NRBAROewgksqrF2dQYDw"
+        "versionLogicalId": "HolidayFetcherLambdaVersionzrfG3LBnjljBfx0kj0LL0DmVHgaxoSKO48SGZpJ8"
       },
       "holidaySearcher": {
+        "name": "holiday_searcher",
+        "description": "Reads the file from s3 and returns the holidays in all over the world for a given date",
         "handler": "s_holidaySearcher.handler",
+        "timeout": 15,
         "environment": {
-          "S3_BUCKET_NAME": "slack-bot",
+          "S3_BUCKET_NAME": "holiday-reminder-slack-bot",
           "S3_FOLDER_NAME": "holidays",
           "S3_FILE_NAME": "list_of_holidays_per_date.json"
         },
@@ -569,13 +584,11 @@
             "schedule": "rate(1 day)"
           }
         ],
-        "name": "world-holidays-dev-holidaySearcher",
         "package": {},
         "memory": 1024,
-        "timeout": 6,
         "runtime": "python3.8",
         "vpc": {},
-        "versionLogicalId": "HolidaySearcherLambdaVersiondjxBSb1X18h1Qi8yaMQpTKjFXcJlvsydqUfhKnfaUM"
+        "versionLogicalId": "HolidaySearcherLambdaVersionuSrewpWAHsiPERE7mHNpx1M3wsWoVl3ZzAGRmHBo7o"
       }
     },
     "configValidationMode": "warn",
@@ -610,7 +623,7 @@
     "artifact": "/Users/thrishmareddy/Desktop/world-holidays/.serverless/world-holidays.zip"
   },
   "package": {
-    "artifactDirectoryName": "serverless/world-holidays/dev/1640219913422-2021-12-23T00:38:33.422Z",
+    "artifactDirectoryName": "serverless/world-holidays/dev/1640221787646-2021-12-23T01:09:47.646Z",
     "artifact": "world-holidays.zip"
   }
 }
