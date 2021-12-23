@@ -1,9 +1,6 @@
-import logging
 import os
 import boto3
 import json
-
-LOGGER = logging.getLogger()
 
 S3_BUCKET_NAME = os.environ.get('S3_BUCKET_NAME')
 
@@ -48,12 +45,12 @@ def create_file_in_s3(filename, bucket_key, data):
     # create a new file in the given path
     s3_handler = S3Handler(bucket_name=S3_BUCKET_NAME, key_name=bucket_key)
     s3_handler.put_object(data)
-    LOGGER.info(f"File {filename} created in S3. Path: {bucket_key}")
+    print(f"File {filename} created in S3. Path: {bucket_key}")
 
 def read_file_in_s3(bucket_key):
     # read a file from the given folder path
     s3_handler = S3Handler(bucket_name=S3_BUCKET_NAME, key_name=bucket_key)
     s3_object = s3_handler.get_s3_object().get()
     data = s3_object['Body'].read().decode('utf-8')
-    LOGGER.info(f"Read {bucket_key}")
+    print(f"Read {bucket_key}")
     return json.loads(data)
