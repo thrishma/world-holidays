@@ -225,7 +225,7 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/world-holidays/dev/1640223393832-2021-12-23T01:36:33.832Z/world-holidays.zip"
+          "S3Key": "serverless/world-holidays/dev/1640223899394-2021-12-23T01:44:59.394Z/world-holidays.zip"
         },
         "Handler": "s_holidayFetcher.handler",
         "Runtime": "python3.8",
@@ -257,7 +257,7 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/world-holidays/dev/1640223393832-2021-12-23T01:36:33.832Z/world-holidays.zip"
+          "S3Key": "serverless/world-holidays/dev/1640223899394-2021-12-23T01:44:59.394Z/world-holidays.zip"
         },
         "Handler": "s_holidaySearcher.handler",
         "Runtime": "python3.8",
@@ -283,25 +283,25 @@
         "HolidaySearcherLogGroup"
       ]
     },
-    "HolidayFetcherLambdaVersion9cVSXWT3VOP47EWVRq4eyrkWODwlrQ90llZMqH0A": {
+    "HolidayFetcherLambdaVersionFT2XIyBZoUxx5Cie3KNGKka9yUhtv9uo3BamMHyQ": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "HolidayFetcherLambdaFunction"
         },
-        "CodeSha256": "XUrTA0J29J36ukStE5URYQkYBwJGo3mgMHhXEZ/OSOI=",
+        "CodeSha256": "cGTXjUuozgvkLblT1J4c/aN+bA0DO8NQ4/e28xhLDsU=",
         "Description": "Web scrapes holidays from a given URL and saves it to s3"
       }
     },
-    "HolidaySearcherLambdaVersionaMZX3bcXIzYffjOphNj4071P98ho0nxKAKCoV0xRKo": {
+    "HolidaySearcherLambdaVersionCOVOsAJr8C0hPPC2eiexynFqg3um9EbOSlsmGHRvgxs": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "HolidaySearcherLambdaFunction"
         },
-        "CodeSha256": "XUrTA0J29J36ukStE5URYQkYBwJGo3mgMHhXEZ/OSOI=",
+        "CodeSha256": "cGTXjUuozgvkLblT1J4c/aN+bA0DO8NQ4/e28xhLDsU=",
         "Description": "Reads the file from s3 and returns the holidays in all over the world for a given date"
       }
     },
@@ -423,7 +423,7 @@
     "HolidayFetcherLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "HolidayFetcherLambdaVersion9cVSXWT3VOP47EWVRq4eyrkWODwlrQ90llZMqH0A"
+        "Ref": "HolidayFetcherLambdaVersionFT2XIyBZoUxx5Cie3KNGKka9yUhtv9uo3BamMHyQ"
       },
       "Export": {
         "Name": "sls-world-holidays-dev-HolidayFetcherLambdaFunctionQualifiedArn"
@@ -432,7 +432,7 @@
     "HolidaySearcherLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "HolidaySearcherLambdaVersionaMZX3bcXIzYffjOphNj4071P98ho0nxKAKCoV0xRKo"
+        "Ref": "HolidaySearcherLambdaVersionCOVOsAJr8C0hPPC2eiexynFqg3um9EbOSlsmGHRvgxs"
       },
       "Export": {
         "Name": "sls-world-holidays-dev-HolidaySearcherLambdaFunctionQualifiedArn"

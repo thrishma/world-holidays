@@ -17,7 +17,7 @@ def create_json_files(file_name, content):
     # create new json files
     # with open(file_name, 'w') as outfile:
     #     json.dump(content, outfile)
-    create_file_in_s3(file_name, bucket_key, content)
+    create_file_in_s3(file_name, bucket_key, json.dumps(content))
     
 
 def find_countries():
@@ -52,7 +52,7 @@ def find_holidays_per_country():
     per_date_holidays_list = {}
 
     for country_id in countries_names.keys():
-        print(f'Fetching details for {country_id}')
+        # print(f'Fetching details for {country_id}')
         per_country_holidays = requests.get(f'https://www.officeholidays.com/countries/{country_id}')
         per_country_holidays_soup = BeautifulSoup(per_country_holidays.content, 'html.parser')
 
