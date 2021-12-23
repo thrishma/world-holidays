@@ -84,16 +84,16 @@
               }
             }
           },
-          "HolidayUnderscorefetcherLogGroup": {
+          "HolidayFetcherLogGroup": {
             "Type": "AWS::Logs::LogGroup",
             "Properties": {
-              "LogGroupName": "/aws/lambda/world-holidays-dev-holiday_fetcher"
+              "LogGroupName": "/aws/lambda/world-holidays-dev-holidayFetcher"
             }
           },
-          "HolidayUnderscoresearcherLogGroup": {
+          "HolidaySearcherLogGroup": {
             "Type": "AWS::Logs::LogGroup",
             "Properties": {
-              "LogGroupName": "/aws/lambda/world-holidays-dev-holiday_searcher"
+              "LogGroupName": "/aws/lambda/world-holidays-dev-holidaySearcher"
             }
           },
           "IamRoleLambdaExecution": {
@@ -207,13 +207,13 @@
                         "Resource": [
                           {
                             "Fn::GetAtt": [
-                              "HolidayUnderscorefetcherLogGroup",
+                              "HolidayFetcherLogGroup",
                               "Arn"
                             ]
                           },
                           {
                             "Fn::GetAtt": [
-                              "HolidayUnderscoresearcherLogGroup",
+                              "HolidaySearcherLogGroup",
                               "Arn"
                             ]
                           }
@@ -225,18 +225,18 @@
               ]
             }
           },
-          "HolidayUnderscorefetcherLambdaFunction": {
+          "HolidayFetcherLambdaFunction": {
             "Type": "AWS::Lambda::Function",
             "Properties": {
               "Code": {
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/world-holidays/dev/1640207275844-2021-12-22T21:07:55.844Z/world-holidays.zip"
+                "S3Key": "serverless/world-holidays/dev/1640218771688-2021-12-23T00:19:31.688Z/world-holidays.zip"
               },
-              "Handler": "s_holiday_fetcher.handler",
+              "Handler": "s_holidayFetcher.handler",
               "Runtime": "python3.8",
-              "FunctionName": "world-holidays-dev-holiday_fetcher",
+              "FunctionName": "world-holidays-dev-holidayFetcher",
               "MemorySize": 1024,
               "Timeout": 6,
               "Environment": {
@@ -253,21 +253,21 @@
               }
             },
             "DependsOn": [
-              "HolidayUnderscorefetcherLogGroup"
+              "HolidayFetcherLogGroup"
             ]
           },
-          "HolidayUnderscoresearcherLambdaFunction": {
+          "HolidaySearcherLambdaFunction": {
             "Type": "AWS::Lambda::Function",
             "Properties": {
               "Code": {
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/world-holidays/dev/1640207275844-2021-12-22T21:07:55.844Z/world-holidays.zip"
+                "S3Key": "serverless/world-holidays/dev/1640218771688-2021-12-23T00:19:31.688Z/world-holidays.zip"
               },
-              "Handler": "s_holiday_searcher.handler",
+              "Handler": "s_holidaySearcher.handler",
               "Runtime": "python3.8",
-              "FunctionName": "world-holidays-dev-holiday_searcher",
+              "FunctionName": "world-holidays-dev-holidaySearcher",
               "MemorySize": 1024,
               "Timeout": 6,
               "Environment": {
@@ -285,30 +285,30 @@
               }
             },
             "DependsOn": [
-              "HolidayUnderscoresearcherLogGroup"
+              "HolidaySearcherLogGroup"
             ]
           },
-          "HolidayUnderscorefetcherLambdaVersionDzfXLCB6YP8XwnxgAR9HZ2ChHVjLdxFj0qHY1uYTk": {
+          "HolidayFetcherLambdaVersionRvfrMNi1x8KNYD3Q4DKvyzidz4X5il9em5CjPtDMKLg": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
-                "Ref": "HolidayUnderscorefetcherLambdaFunction"
+                "Ref": "HolidayFetcherLambdaFunction"
               },
-              "CodeSha256": "Hy5R93zn26w1W238ws4h9Jd3l9d64JJM4WyzkTzRLCY="
+              "CodeSha256": "RwSpSSptGBBxs3rlRpZszshh0iyVgYE4dRI1DS0iZOQ="
             }
           },
-          "HolidayUnderscoresearcherLambdaVersionaTizO9XtjfqeXTYZApceQ342LNTtFwWKQMkbmk6fA3A": {
+          "HolidaySearcherLambdaVersionnY0hW8tbH8C5NTPIynbfC8k8sAfOGOmPzmrnxO0": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
-                "Ref": "HolidayUnderscoresearcherLambdaFunction"
+                "Ref": "HolidaySearcherLambdaFunction"
               },
-              "CodeSha256": "Hy5R93zn26w1W238ws4h9Jd3l9d64JJM4WyzkTzRLCY="
+              "CodeSha256": "RwSpSSptGBBxs3rlRpZszshh0iyVgYE4dRI1DS0iZOQ="
             }
           },
-          "HolidayUnderscorefetcherEventsRuleSchedule1": {
+          "HolidayFetcherEventsRuleSchedule1": {
             "Type": "AWS::Events::Rule",
             "Properties": {
               "ScheduleExpression": "rate(1 year)",
@@ -317,21 +317,21 @@
                 {
                   "Arn": {
                     "Fn::GetAtt": [
-                      "HolidayUnderscorefetcherLambdaFunction",
+                      "HolidayFetcherLambdaFunction",
                       "Arn"
                     ]
                   },
-                  "Id": "holiday_fetcherSchedule"
+                  "Id": "holidayFetcherSchedule"
                 }
               ]
             }
           },
-          "HolidayUnderscorefetcherLambdaPermissionEventsRuleSchedule1": {
+          "HolidayFetcherLambdaPermissionEventsRuleSchedule1": {
             "Type": "AWS::Lambda::Permission",
             "Properties": {
               "FunctionName": {
                 "Fn::GetAtt": [
-                  "HolidayUnderscorefetcherLambdaFunction",
+                  "HolidayFetcherLambdaFunction",
                   "Arn"
                 ]
               },
@@ -339,13 +339,13 @@
               "Principal": "events.amazonaws.com",
               "SourceArn": {
                 "Fn::GetAtt": [
-                  "HolidayUnderscorefetcherEventsRuleSchedule1",
+                  "HolidayFetcherEventsRuleSchedule1",
                   "Arn"
                 ]
               }
             }
           },
-          "HolidayUnderscoresearcherEventsRuleSchedule1": {
+          "HolidaySearcherEventsRuleSchedule1": {
             "Type": "AWS::Events::Rule",
             "Properties": {
               "ScheduleExpression": "rate(1 day)",
@@ -354,21 +354,21 @@
                 {
                   "Arn": {
                     "Fn::GetAtt": [
-                      "HolidayUnderscoresearcherLambdaFunction",
+                      "HolidaySearcherLambdaFunction",
                       "Arn"
                     ]
                   },
-                  "Id": "holiday_searcherSchedule"
+                  "Id": "holidaySearcherSchedule"
                 }
               ]
             }
           },
-          "HolidayUnderscoresearcherLambdaPermissionEventsRuleSchedule1": {
+          "HolidaySearcherLambdaPermissionEventsRuleSchedule1": {
             "Type": "AWS::Lambda::Permission",
             "Properties": {
               "FunctionName": {
                 "Fn::GetAtt": [
-                  "HolidayUnderscoresearcherLambdaFunction",
+                  "HolidaySearcherLambdaFunction",
                   "Arn"
                 ]
               },
@@ -376,29 +376,29 @@
               "Principal": "events.amazonaws.com",
               "SourceArn": {
                 "Fn::GetAtt": [
-                  "HolidayUnderscoresearcherEventsRuleSchedule1",
+                  "HolidaySearcherEventsRuleSchedule1",
                   "Arn"
                 ]
               }
             }
           },
-          "CWLSubFilterHolidayUnderscorefetcherLogGroupUsEast1": {
+          "CWLSubFilterHolidayFetcherLogGroupUsEast1": {
             "Type": "AWS::Logs::SubscriptionFilter",
             "Properties": {
               "DestinationArn": "arn:aws:logs:us-east-1:802587217904:destination:11b02d18-917d-4c95-ae96-24d1948171dc#NXH2bWnMJ97v7ZG6FH#world-holidays#dev",
               "FilterPattern": "?\"REPORT RequestId: \" ?\"SERVERLESS_ENTERPRISE\"",
               "LogGroupName": {
-                "Ref": "HolidayUnderscorefetcherLogGroup"
+                "Ref": "HolidayFetcherLogGroup"
               }
             }
           },
-          "CWLSubFilterHolidayUnderscoresearcherLogGroupUsEast1": {
+          "CWLSubFilterHolidaySearcherLogGroupUsEast1": {
             "Type": "AWS::Logs::SubscriptionFilter",
             "Properties": {
               "DestinationArn": "arn:aws:logs:us-east-1:802587217904:destination:11b02d18-917d-4c95-ae96-24d1948171dc#NXH2bWnMJ97v7ZG6FH#world-holidays#dev",
               "FilterPattern": "?\"REPORT RequestId: \" ?\"SERVERLESS_ENTERPRISE\"",
               "LogGroupName": {
-                "Ref": "HolidayUnderscoresearcherLogGroup"
+                "Ref": "HolidaySearcherLogGroup"
               }
             }
           }
@@ -423,22 +423,22 @@
               "Name": "sls-world-holidays-dev-EnterpriseLogAccessIamRole"
             }
           },
-          "HolidayUnderscorefetcherLambdaFunctionQualifiedArn": {
+          "HolidayFetcherLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "HolidayUnderscorefetcherLambdaVersionDzfXLCB6YP8XwnxgAR9HZ2ChHVjLdxFj0qHY1uYTk"
+              "Ref": "HolidayFetcherLambdaVersionRvfrMNi1x8KNYD3Q4DKvyzidz4X5il9em5CjPtDMKLg"
             },
             "Export": {
-              "Name": "sls-world-holidays-dev-HolidayUnderscorefetcherLambdaFunctionQualifiedArn"
+              "Name": "sls-world-holidays-dev-HolidayFetcherLambdaFunctionQualifiedArn"
             }
           },
-          "HolidayUnderscoresearcherLambdaFunctionQualifiedArn": {
+          "HolidaySearcherLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "HolidayUnderscoresearcherLambdaVersionaTizO9XtjfqeXTYZApceQ342LNTtFwWKQMkbmk6fA3A"
+              "Ref": "HolidaySearcherLambdaVersionnY0hW8tbH8C5NTPIynbfC8k8sAfOGOmPzmrnxO0"
             },
             "Export": {
-              "Name": "sls-world-holidays-dev-HolidayUnderscoresearcherLambdaFunctionQualifiedArn"
+              "Name": "sls-world-holidays-dev-HolidaySearcherLambdaFunctionQualifiedArn"
             }
           }
         }
@@ -538,8 +538,8 @@
     ],
     "pluginsData": {},
     "functions": {
-      "holiday_fetcher": {
-        "handler": "s_holiday_fetcher.handler",
+      "holidayFetcher": {
+        "handler": "s_holidayFetcher.handler",
         "environment": {
           "S3_BUCKET_NAME": "slack-bot",
           "S3_FOLDER_NAME": "holidays"
@@ -549,16 +549,16 @@
             "schedule": "rate(1 year)"
           }
         ],
-        "name": "world-holidays-dev-holiday_fetcher",
+        "name": "world-holidays-dev-holidayFetcher",
         "package": {},
         "memory": 1024,
         "timeout": 6,
         "runtime": "python3.8",
         "vpc": {},
-        "versionLogicalId": "HolidayUnderscorefetcherLambdaVersionDzfXLCB6YP8XwnxgAR9HZ2ChHVjLdxFj0qHY1uYTk"
+        "versionLogicalId": "HolidayFetcherLambdaVersionRvfrMNi1x8KNYD3Q4DKvyzidz4X5il9em5CjPtDMKLg"
       },
-      "holiday_searcher": {
-        "handler": "s_holiday_searcher.handler",
+      "holidaySearcher": {
+        "handler": "s_holidaySearcher.handler",
         "environment": {
           "S3_BUCKET_NAME": "slack-bot",
           "S3_FOLDER_NAME": "holidays",
@@ -569,13 +569,13 @@
             "schedule": "rate(1 day)"
           }
         ],
-        "name": "world-holidays-dev-holiday_searcher",
+        "name": "world-holidays-dev-holidaySearcher",
         "package": {},
         "memory": 1024,
         "timeout": 6,
         "runtime": "python3.8",
         "vpc": {},
-        "versionLogicalId": "HolidayUnderscoresearcherLambdaVersionaTizO9XtjfqeXTYZApceQ342LNTtFwWKQMkbmk6fA3A"
+        "versionLogicalId": "HolidaySearcherLambdaVersionnY0hW8tbH8C5NTPIynbfC8k8sAfOGOmPzmrnxO0"
       }
     },
     "configValidationMode": "warn",
@@ -610,7 +610,7 @@
     "artifact": "/Users/thrishmareddy/Desktop/world-holidays/.serverless/world-holidays.zip"
   },
   "package": {
-    "artifactDirectoryName": "serverless/world-holidays/dev/1640207275844-2021-12-22T21:07:55.844Z",
+    "artifactDirectoryName": "serverless/world-holidays/dev/1640218771688-2021-12-23T00:19:31.688Z",
     "artifact": "world-holidays.zip"
   }
 }

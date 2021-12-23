@@ -25,7 +25,7 @@ functions:
       S3_BUCKET_NAME: ${self:custom.bucket_name}
       S3_FOLDER_NAME: holidays
     events:
-      - schedule: rate(1 year)
+      - schedule: rate(364 days)
   
   holidaySearcher:
     handler: holiday_searcher.handler
