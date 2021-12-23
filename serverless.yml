@@ -20,7 +20,10 @@ provider:
 
 functions:
   holidayFetcher:
+    name: holiday_fetcher
+    description: Web scrapes holidays from a given URL and saves it to s3
     handler: holiday_fetcher.handler
+    timeout: 15
     environment:
       S3_BUCKET_NAME: ${self:custom.bucket_name}
       S3_FOLDER_NAME: holidays
@@ -28,7 +31,10 @@ functions:
       - schedule: rate(364 days)
   
   holidaySearcher:
+    name: holiday_searcher
+    description: Reads the file from s3 and returns the holidays in all over the world for a given date
     handler: holiday_searcher.handler
+    timeout: 15
     environment:
       S3_BUCKET_NAME: ${self:custom.bucket_name}
       S3_FOLDER_NAME: holidays
