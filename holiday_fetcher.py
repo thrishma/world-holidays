@@ -47,6 +47,7 @@ def find_countries():
 
 def find_holidays_per_country():
     # Obtain a list of holidays for each country and save them based on dates
+    print("entering find_holidays_per_country function")
     countries_names = find_countries()
     
     per_date_holidays_list = {}
@@ -80,6 +81,7 @@ def find_holidays_per_country():
     create_json_files(S3_FILE_NAME, per_date_holidays_list)
 
 def handler(event, context):
+    print("entering holiday_fetcher function")
     try:
         find_holidays_per_country()
         return {
