@@ -238,7 +238,7 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/world-holidays/dev/1640229954384-2021-12-23T03:25:54.384Z/world-holidays.zip"
+                "S3Key": "serverless/world-holidays/dev/1640230438512-2021-12-23T03:33:58.512Z/world-holidays.zip"
               },
               "Handler": "s_holidayFetcher.handler",
               "Runtime": "python3.8",
@@ -271,7 +271,7 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/world-holidays/dev/1640229954384-2021-12-23T03:25:54.384Z/world-holidays.zip"
+                "S3Key": "serverless/world-holidays/dev/1640230438512-2021-12-23T03:33:58.512Z/world-holidays.zip"
               },
               "Handler": "s_holidaySearcher.handler",
               "Runtime": "python3.8",
@@ -297,25 +297,25 @@
               "HolidaySearcherLogGroup"
             ]
           },
-          "HolidayFetcherLambdaVersionyPK2vMk0BoTsaaaNi9BkCFdxMLKRERH8NlGN0rCRT2M": {
+          "HolidayFetcherLambdaVersionDurBjyybWOtZGyPlIHAguYp6F3xnioJeJqJXU4Za8": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "HolidayFetcherLambdaFunction"
               },
-              "CodeSha256": "ffiV4FV4TgbCn87WE9Hj1FW3uUUh6SoC/FoLGfQxOfU=",
+              "CodeSha256": "MfcAzz3xSulwxc/rWJ2APU1TW/mipINgy/GaHHANoUo=",
               "Description": "Web scrapes holidays from a given URL and saves it to s3"
             }
           },
-          "HolidaySearcherLambdaVersionqPLWjxR3fGivovq9woVfCqYPktNeZoumPDX2rqo": {
+          "HolidaySearcherLambdaVersiont3CfgN8ZHl6ogadxngNU43mWaWD8u7jp7yABvU": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "HolidaySearcherLambdaFunction"
               },
-              "CodeSha256": "ffiV4FV4TgbCn87WE9Hj1FW3uUUh6SoC/FoLGfQxOfU=",
+              "CodeSha256": "MfcAzz3xSulwxc/rWJ2APU1TW/mipINgy/GaHHANoUo=",
               "Description": "Reads the file from s3 and returns the holidays in all over the world for a given date"
             }
           },
@@ -437,7 +437,7 @@
           "HolidayFetcherLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "HolidayFetcherLambdaVersionyPK2vMk0BoTsaaaNi9BkCFdxMLKRERH8NlGN0rCRT2M"
+              "Ref": "HolidayFetcherLambdaVersionDurBjyybWOtZGyPlIHAguYp6F3xnioJeJqJXU4Za8"
             },
             "Export": {
               "Name": "sls-world-holidays-dev-HolidayFetcherLambdaFunctionQualifiedArn"
@@ -446,7 +446,7 @@
           "HolidaySearcherLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "HolidaySearcherLambdaVersionqPLWjxR3fGivovq9woVfCqYPktNeZoumPDX2rqo"
+              "Ref": "HolidaySearcherLambdaVersiont3CfgN8ZHl6ogadxngNU43mWaWD8u7jp7yABvU"
             },
             "Export": {
               "Name": "sls-world-holidays-dev-HolidaySearcherLambdaFunctionQualifiedArn"
@@ -569,7 +569,7 @@
         "memory": 1024,
         "runtime": "python3.8",
         "vpc": {},
-        "versionLogicalId": "HolidayFetcherLambdaVersionyPK2vMk0BoTsaaaNi9BkCFdxMLKRERH8NlGN0rCRT2M"
+        "versionLogicalId": "HolidayFetcherLambdaVersionDurBjyybWOtZGyPlIHAguYp6F3xnioJeJqJXU4Za8"
       },
       "holidaySearcher": {
         "name": "holiday_searcher",
@@ -590,7 +590,7 @@
         "memory": 1024,
         "runtime": "python3.8",
         "vpc": {},
-        "versionLogicalId": "HolidaySearcherLambdaVersionqPLWjxR3fGivovq9woVfCqYPktNeZoumPDX2rqo"
+        "versionLogicalId": "HolidaySearcherLambdaVersiont3CfgN8ZHl6ogadxngNU43mWaWD8u7jp7yABvU"
       }
     },
     "configValidationMode": "warn",
@@ -625,7 +625,7 @@
     "artifact": "/Users/thrishmareddy/Desktop/world-holidays/.serverless/world-holidays.zip"
   },
   "package": {
-    "artifactDirectoryName": "serverless/world-holidays/dev/1640229954384-2021-12-23T03:25:54.384Z",
+    "artifactDirectoryName": "serverless/world-holidays/dev/1640230438512-2021-12-23T03:33:58.512Z",
     "artifact": "world-holidays.zip"
   }
 }
